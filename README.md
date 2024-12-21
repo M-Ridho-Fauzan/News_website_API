@@ -11,13 +11,13 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   [Simple, fast routing engine](https://laravel.com/docs/routing).
+-   [Powerful dependency injection container](https://laravel.com/docs/container).
+-   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+-   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+-   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+-   [Robust background job processing](https://laravel.com/docs/queues).
+-   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
@@ -35,19 +35,19 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+-   **[Vehikl](https://vehikl.com/)**
+-   **[Tighten Co.](https://tighten.co)**
+-   **[WebReinvent](https://webreinvent.com/)**
+-   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+-   **[64 Robots](https://64robots.com)**
+-   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+-   **[Cyber-Duck](https://cyber-duck.co.uk)**
+-   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+-   **[Jump24](https://jump24.co.uk)**
+-   **[Redberry](https://redberry.international/laravel/)**
+-   **[Active Logic](https://activelogic.com)**
+-   **[byte5](https://byte5.de)**
+-   **[OP.GG](https://op.gg)**
 
 ## Contributing
 
@@ -60,6 +60,107 @@ In order to ensure that the Laravel community is welcoming to all, please review
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## 🛠️ Teknologi yang Digunakan
+
+Samakan terlebih dahulu ini, agar tidak **error**:
+
+-   **Laravel**: 11.28
+-   **Tailwind CSS**: 3
+-   **PHP**: 8.3.12
+-   **Node.js**: 20.18.0
+-   **MySQL**: 8.3.0
+
+### Cara cek nya
+
+Cari di google dengan keyword:
+
+```bash
+Bagaimana mengecek versi php di laragon
+```
+
+```bash
+Bagaimana mengecek versi MySql di laragon
+```
+
+```bash
+Bagaimana mengecek versi Node.Js di laragon
+```
+
+---
+
+## Sebelum memulai
+
+Masukan Perintah perintah berikut secara berurutan di terminal Anda.
+
+### 1️⃣ Clone Proyek dari Repository
+
+```bash
+git clone https://github.com/M-Ridho-Fauzan/News_website_API.git
+```
+
+```bash
+cd News_website_API
+```
+
+### 2️⃣ Instalasi Dependensi
+
+```bash
+composer install
+```
+
+```bash
+npm install
+```
+
+### 3️⃣ Kofigurasi .env
+
+```bash
+cp .env.example
+```
+
+```bash
+php artisan key:generate
+```
+
+-   **Ubah/samakan bagian-bagian ini**: di file `.env` sesuai kan.
+
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=news_website_app
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Google Auth Token
+GOOGLE_CLIENT_ID=21305654142-tg0e99k2b0qvv98domvjnu1k4uuaqf1c.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+GOOGLE_REDIRECT_URI=http://127.0.0.1:8000/auth/google/callback
+
+# Github Auth Token
+GITHUB_CLIENT_ID=Ov23liEtddGrmkPyuCsQ
+GITHUB_CLIENT_SECRET=a7b9fb3f75c8aea2d390539ed31bff4b2a3780dd
+GITHUB_REDIRECT_URI=http://127.0.0.1:8000/auth/github/callback
+```
+
+### 4️⃣ Migrasi Database
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+-   **Di terminal baru:** Jalankan ini:
+
+```bash
+php artisan ser
+```
+
+-   **Di terminal baru lagi:** Jalankan ini:
+
+```bash
+npm run dev
+```
 
 ## License
 
