@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#dark-toggle:not(:checked) ~ label div > svg.sv-light {
+  @apply hidden;
+}
