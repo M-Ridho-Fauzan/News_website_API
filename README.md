@@ -183,4 +183,4 @@ npm run dev
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<small><i>Aya error keneh??!, pakyuu 🖕🖕🖕!!!</i></small>
+![Static Badge](https://img.shields.io/badge/build-pakyuu-brightgreen?style=plastic&logo=aral&logoColor=gray&label=Aya%20error%20keneh%20wae%3F%3F!&labelColor=white&color=red)
