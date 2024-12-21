@@ -70,6 +70,7 @@ Samakan terlebih dahulu ini, agar tidak **error**:
 -   **PHP**: 8.3.12
 -   **Node.js**: 20.18.0
 -   **MySQL**: 8.3.0
+-   **Laragon**: Baraha Wae, terbaru alus na mah.
 
 ### Cara cek nya
 
@@ -87,11 +88,27 @@ Bagaimana mengecek versi MySql di laragon
 Bagaimana mengecek versi Node.Js di laragon
 ```
 
+### Untuk cara mengganti versi di atas, cari cara nya di google menngunakan perintah ini:
+
+```bash
+laragon how to add another php version
+```
+
+```bash
+laragon how to add another Node.js version
+```
+
+```bash
+laragon how to add another MySql version
+```
+
+Jika ada versi yang beda, download alat-alat nya di [link Google Drive ini](https://drive.google.com/drive/u/2/folders/1vTMnaYzjjx-OneLvWd6MSWwhzj2SkoRr).
+
 ---
 
 ## Sebelum memulai
 
-Masukan Perintah perintah berikut secara berurutan di terminal Anda.
+Pergi ke folder ".../laragon/www", lalu klik kanan, dan klik 'Git Bash Here', dan Masukan Perintah- perintah berikut secara berurutan di terminal Anda.
 
 ### 1️⃣ Clone Proyek dari Repository
 
@@ -165,3 +182,5 @@ npm run dev
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+<small><i>Aya error keneh??!, pakyuu 🖕🖕🖕!!!</i></small>
