@@ -26,13 +26,35 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        // Validasi input, termasuk validasi gambar jika ada
+        $validated = $request->validated();
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Handle file upload
+        if ($request->hasFile('user_img') && $request->file('user_img')->isValid()) {
+            // Hapus gambar lama jika ada
+            if ($user->user_img && file_exists(public_path('img/' . $user->user_img))) {
+                unlink(public_path('img/' . $user->user_img));
+            }
+
+            // Simpan gambar baru ke folder public/img
+            $file = $request->file('user_img');
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('img'), $fileName);
+
+            // Simpan nama file ke dalam database
+            $validated['user_img'] = $fileName;
         }
 
-        $request->user()->save();
+        // Update data pengguna
+        $user->fill($validated);
+
+        // Jika email berubah, set email_verified_at menjadi null
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -49,6 +71,11 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
+
+        // Hapus gambar profil jika ada
+        if ($user->user_img && file_exists(public_path('img/' . $user->user_img))) {
+            unlink(public_path('img/' . $user->user_img));
+        }
 
         $user->delete();
 

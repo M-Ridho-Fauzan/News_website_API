@@ -5,3 +5,11 @@
 #dark-toggle:not(:checked) ~ label div > svg.sv-light {
   @apply hidden;
 }
+
+.profile-img {
+    width: 250px; /* Lebar gambar */
+    height: 250px; /* Tinggi gambar */
+    object-fit: cover; /* Mengatur gambar agar selalu memenuhi container */
+    border-radius: 50%; /* Membuat gambar berbentuk lingkaran */
+    border: 2px solid #ddd; /* Tambahkan border opsional */
+}
