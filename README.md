@@ -174,6 +174,19 @@ GITHUB_CLIENT_SECRET=a7b9fb3f75c8aea2d390539ed31bff4b2a3780dd
 GITHUB_REDIRECT_URI=http://127.0.0.1:8000/auth/github/callback
 ```
 
+```bash
+# Untuk Email Direct
+MAIL_MAILER=smtp
+MAIL_SCHEME=null
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=akunweb255@gmail.com
+MAIL_PASSWORD=vvjunyfiwklygiqc
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS="akunweb255@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
 ### 4️⃣ Migrasi Database
 
 ```bash
