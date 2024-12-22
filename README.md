@@ -61,6 +61,17 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+## 🦠 Akun Google Untuk Debbuging
+
+- **Id:**
+```bash
+akunweb255@gmail.com
+```
+- **Password:**
+```bash
+Password_123
+```
+
 ## 🛠️ Teknologi yang Digunakan
 
 Samakan terlebih dahulu ini, agar tidak **error**:
@@ -72,7 +83,7 @@ Samakan terlebih dahulu ini, agar tidak **error**:
 -   **MySQL**: 8.3.0
 -   **Laragon**: Baraha Wae, terbaru alus na mah.
 
-### Cara cek nya
+### 🤖 Cara cek nya
 
 Cari di google dengan keyword:
 
@@ -88,7 +99,9 @@ Bagaimana mengecek versi MySql di laragon
 Bagaimana mengecek versi Node.Js di laragon
 ```
 
-### Untuk cara mengganti versi di atas, cari cara nya di google menngunakan perintah ini:
+### 👾 Untuk cara mengganti versi di atas
+
+cari cara nya di google menngunakan perintah ini:
 
 ```bash
 laragon how to add another php version
@@ -106,7 +119,7 @@ Jika ada versi yang beda, download alat-alat nya di [link Google Drive ini](http
 
 ---
 
-## Sebelum memulai
+## ➕ Sebelum memulai
 
 Pergi ke folder ".../laragon/www", lalu klik kanan, dan klik 'Git Bash Here', dan Masukan Perintah- perintah berikut secara berurutan di terminal Anda.
 

@@ -9,7 +9,7 @@
         </div>
 
         <div
-            class="w-full px-5 py-4 mt-6 bg-white/30 dark:shadow-md sm:max-w-xl dark:bg-gray-700/30 backdrop-blur-sm sm:rounded-lg">
+            class="w-full px-5 py-4 mt-6 bg-gray-300/30 dark:shadow-md sm:max-w-xl dark:bg-gray-700/30 backdrop-blur-sm sm:rounded-lg">
 
 
             <form method="POST" action="{{ route('register') }}">
@@ -62,13 +62,13 @@
 
                 <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                     href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Sudah Punya Akun?') }}
                 </a>
 
                 <div class="flex items-center my-4">
-                    <div class="flex-grow border-t dark:border-gray-700"></div>
+                    <div class="flex-grow border-t border-gray-500 dark:border-gray-700"></div>
                     <span class="px-4 text-gray-500">Atau</span>
-                    <div class="flex-grow border-t dark:border-gray-700"></div>
+                    <div class="flex-grow border-t border-gray-500 dark:border-gray-700"></div>
                 </div>
 
                 <div class="grid flex-row items-center my-4">
@@ -80,7 +80,7 @@
 
                     {{-- Login with github --}}
                     <x-primary-link-btn href="{{ route('socialite.redirect', 'github') }}">
-                        <x-icons.github-icon width="24" height="24" class="mr-2" />
+                        <x-icons.github-icon width="24" height="24" class="mr-2 dark:fill-black fill-gray-300" />
                         {{ __('Register with github') }}
                     </x-primary-link-btn>
                 </div>

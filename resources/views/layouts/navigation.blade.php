@@ -31,9 +31,11 @@
                         <x-slot name="trigger">
                             <button
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
-                                <div class="w-16 px-3 rounded-full">
+                                <div class="w-16 px-2 overflow-hidden rounded-full">
                                     <img class="border rounded-full dark:brightness-50"
-                                        src="{{ Auth::user()->user_img }}" alt="{{ Auth::user()->name }}">
+                                        x-bind:src="userImg || '{{ asset('img/no-profile.png') }}'"
+                                        x-data="{ userImg: '{{ Auth::user()->user_img ? asset(Auth::user()->user_img) : '' }}' }" alt="{{ Auth::user()->name }}"
+                                        onerror="this.onerror=null;this.src='{{ asset('img/no-profile.png') }}';">
                                 </div>
                                 <div>{{ Auth::user()->name }}</div>
 

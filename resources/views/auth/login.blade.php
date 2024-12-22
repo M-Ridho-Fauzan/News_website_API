@@ -10,7 +10,8 @@
         </div>
 
         <div
-            class="w-full px-5 py-4 mt-6 bg-white/30 dark:shadow-md sm:max-w-xl dark:bg-gray-700/30 backdrop-blur-sm sm:rounded-lg">
+            class="w-full px-5 py-4 mt-6 bg-gray-300/30 dark:shadow-md sm:max-w-xl dark:bg-gray-700/30 backdrop-blur-sm sm:rounded-lg">
+
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
