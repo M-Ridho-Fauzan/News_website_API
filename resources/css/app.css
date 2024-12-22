@@ -13,3 +13,8 @@
     border-radius: 50%; /* Membuat gambar berbentuk lingkaran */
     border: 2px solid #ddd; /* Tambahkan border opsional */
 }
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

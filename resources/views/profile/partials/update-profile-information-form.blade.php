@@ -42,6 +42,15 @@
                     </div>
                 </div>
 
+                <!-- Tombol batal -->
+                <button id="cancel-button-img" onclick="resetImageSelection()" type="button"
+                    class="hidden ml-2 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+                    Batalkan
+                </button>
+
+                <div id="message-img" class="mt-2"></div>
+
+                <x-input-error class="mt-2" :messages="$errors->get('user_img')" />
                 <!-- Nama File Terpilih -->
                 <p id="file-name" class="text-sm text-gray-500 mt-2 text-center"></p>
             </div>
@@ -87,7 +96,7 @@
         </div>
         <!-- Tombol Simpan -->
         <div class="flex items-center gap-4">
-            <x-primary-button class="px-7">{{ __('Save') }}</x-primary-button>
+            <x-primary-button id="saveButton" class="px-7" disabled>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"

@@ -26,6 +26,8 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $request->user()->fill($request->validated());
+        
         // Validasi input, termasuk validasi gambar jika ada
         $validated = $request->validated();
         $user = $request->user();
