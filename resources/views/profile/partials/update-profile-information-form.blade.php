@@ -1,5 +1,5 @@
 <section>
-    <header>
+    <header class="border-b dark:border-gray-600 py-6">
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Profile Information') }}
         </h2>
@@ -13,52 +13,87 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
-        </div>
+        <div class="flex flex-col md:flex-row-reverse space-y-6 md:space-y-0 md:space-x-6">
+            <!-- Bagian Kanan: Upload Foto Profil -->
+            <div class="flex-1 sm:border-b-2 sm:border-gray-200 dark:sm:border-gray-600 p-6">
+                <!-- Label untuk Foto Profil -->
+                <x-input-label for="user_img" :value="__('Foto Profil')" class="ml-2 mb-2" />
 
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                <div class="flex w-full justify-center">
+                    <div class="relative w-fit p-2  overflow-hidden rounded-full bg-white dark:bg-gray-400 shadow-md">
+                        <!-- Gambar Profil -->
+                        <img id="preview" class="profile-img" width="250" height="250"
+                            src="{{ Auth::user()->user_img ? asset('img/' . Auth::user()->user_img) : asset('img/no-profile.png') }}"
+                            alt="{{ Auth::user()->name }}"
+                            onerror="this.onerror=null;this.src='{{ asset('img/no-profile.png') }}';">
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+                        <!-- Overlay untuk Input File -->
+                        <div
+                            class="absolute inset-0 flex rounded-full items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-all">
+                            <x-icons.file-icon class="w-12 h-12 fill-white" />
+                            <input type="file" name="user_img" id="user_img"
+                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                onchange="previewImage(event)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nama File Terpilih -->
+                <p id="file-name" class="text-sm text-gray-500 mt-2 text-center"></p>
+            </div>
+
+            <!-- Bagian Kiri: Input Name dan Email -->
+            <div class="flex-1 p-6 space-y-6">
+                <!-- Input Name -->
                 <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
+                    <x-input-label for="name" :value="__('Name')" />
+                    <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                        :value="old('name', $user->name)" required autofocus autocomplete="name" />
+                    <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                </div>
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
+                <!-- Input Email -->
+                <div class="mt-6">
+                    <x-input-label for="email" :value="__('Email')" />
+                    <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
+                        :value="old('email', $user->email)" required autocomplete="username" />
+                    <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
+                    <!-- Verifikasi Email -->
+                    @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-800 dark:text-gray-200">
+                                {{ __('Your email address is unverified.') }}
+
+                                <button form="send-verification"
+                                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                                    {{ __('Click here to re-send the verification email.') }}
+                                </button>
+                            </p>
+
+                            @if (session('status') === 'verification-link-sent')
+                                <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
+                                    {{ __('A new verification link has been sent to your email address.') }}
+                                </p>
+                            @endif
+                        </div>
                     @endif
                 </div>
-            @endif
+            </div>
         </div>
-
+        <!-- Tombol Simpan -->
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button class="px-7">{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>
+
 </section>

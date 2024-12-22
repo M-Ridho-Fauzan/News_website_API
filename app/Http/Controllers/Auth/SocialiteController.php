@@ -22,6 +22,7 @@ class SocialiteController extends Controller
 
     public function callback($provider)
     {
+        try {
         $socialUser = Socialite::driver($provider)->user();
 
         $authUser = $this->store($socialUser, $provider);
@@ -29,6 +30,9 @@ class SocialiteController extends Controller
         Auth::login($authUser);
 
         return redirect("/dashboard");
+            } catch (\Exception $e) {
+        return redirect('/login')->with('error', 'Something went wrong!');
+    }
     }
 
         public function store($socialUser, $provider)
@@ -48,6 +52,7 @@ class SocialiteController extends Controller
                         $socialUser->getName() : $socialUser->getNickname(),
                     'email' => $socialUser->getEmail(),
                     'password' => Hash::make('password@1234'),
+                    'email_verified_at' => now(),
                 ]);
             }
 

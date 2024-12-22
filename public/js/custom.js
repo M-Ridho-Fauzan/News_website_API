@@ -39,3 +39,28 @@ if (
 } else {
     darkToggle.checked = false;
 }
+
+// ===========
+
+function previewImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('preview');
+    const fileName = document.getElementById('file-name');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        // Tampilkan pratinjau gambar
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+
+        // Tampilkan nama file
+        fileName.textContent = `Selected file: ${input.files[0].name}`;
+    } else {
+        // Reset jika tidak ada file yang dipilih
+        preview.src = "{{ asset('img/no-profile.png') }}";
+        fileName.textContent = '';
+    }
+}
