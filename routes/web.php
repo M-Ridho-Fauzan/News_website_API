@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\Content\HomeController;
+use App\Http\Controllers\Content\SinglePostController;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/all-post/single-post', [SinglePostController::class, 'index'])->name('single-post');
+// Route::get('/', [::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
