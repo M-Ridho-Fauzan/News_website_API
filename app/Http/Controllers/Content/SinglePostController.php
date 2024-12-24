@@ -15,11 +15,12 @@ class SinglePostController extends Controller
         $this->postServices = $postServices;
     }
 
-    public function index()
+    public function index($id)
     {
-        $id = "/sport/2022/oct/07/cricket-jos-buttler-primed-for-england-comeback-while-phil-salt-stays-focused";
+        // $id = "/sport/2022/oct/07/cricket-jos-buttler-primed-for-england-comeback-while-phil-salt-stays-focused";
+        $merged =  "/" . $id;
 
-        $results = $this->postServices->getPost($id);
+        $results = $this->postServices->getPost($merged);
 
         dd($results);
 

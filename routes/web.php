@@ -8,7 +8,9 @@ use App\Http\Controllers\Content\KategoriController;
 use App\Http\Controllers\Content\SinglePostController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/all-post/single-post', [SinglePostController::class, 'index'])->name('single-post');
+Route::get('/all-post/single-post/{id}', [SinglePostController::class, 'index'])
+    ->where('id', '.*')
+    ->name('single-post');
 // Route::get('/', [KategoriController::class, 'index'])->name('kategori');
 // Route::get('/', [::class, 'index'])->name('home');
 

@@ -18,6 +18,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('home');
+        $posts = $this->postsServices->getPosts('12 years a slave', 'film', '', 10);
+        return view('home', compact('posts'));
     }
 }

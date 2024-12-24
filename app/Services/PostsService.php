@@ -32,9 +32,10 @@ class PostsService extends PostsProcessor
                             ->setShowTags("contributor,blog")
                             ->setShowFields("trailText,thumbnail,short-url,lastModified,score")
                             // ->setShowFields("all")
-                            ->setShowReferences("author")
+                            ->setShowReferences("all")
                             ->setSection($kategori)
                             ->fetch();
+                        // } 
                     }, 5000); // Retry 3 kali dengan jeda 5 detik
 
                     $results = $response->response->results;
