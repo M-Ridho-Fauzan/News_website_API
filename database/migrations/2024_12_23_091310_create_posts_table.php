@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('slug_post')->unique();
             $table->text('image')->nullable();
             $table->text('content');
-            $table->foreignId('user_id')
-                ->constrained('users', 'user_id')
-                ->onDelete('cascade');
             $table->foreignId('kategori_id')
                 ->constrained('kategoris', 'kategori_id')
                 ->onDelete('cascade'); // = section

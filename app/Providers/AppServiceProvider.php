@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\PostsService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // View::composer('*', function ($view) {
+        //     $postsService = app(PostsService::class);
+        //     $posts = $postsService->getPosts('search-query', 'kategori', 'author', 10);
+        //     $view->with('posts', $posts);
+        // });
     }
 }
