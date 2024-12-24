@@ -19,7 +19,9 @@ class PostsProcessor
             'thumbnail' => $item->fields->thumbnail ?? null,
             'authorImage' => $this->getAuthorImage($item),
             'authorName' => $this->getAuthorName($item),
-            'authorId' => $this->getAuthorId($item),
+            'authorId1' => $this->getAuthorId1($item),
+            'authorId2' => $this->getAuthorId2($item),
+            'authorTag' => $this->getAuthorTag($item),
             'desk' => $item->fields->trailText,
             'shortUrl' => $item->fields->shortUrl,
             'kategori' => $item->sectionName,
@@ -33,9 +35,9 @@ class PostsProcessor
     {
         if (!empty($item->tags)) {
             $tag = $item->tags[0];
-            return $tag->bylineLargeImageUrl ?? $tag->bylineImageUrl ?? '/../img/randomUser.png';
+            return $tag->bylineLargeImageUrl ?? $tag->bylineImageUrl ?? asset('/img/no-profile.png');
         }
-        return null;
+        return asset('/img/no-profile.png');
     }
 
     public function getAuthorName($item)
@@ -45,10 +47,29 @@ class PostsProcessor
             ->first() ?? 'Anonymous';
     }
 
-    public function getAuthorId($item)
+    /**
+     * berikan '+' di sepasi nya, jika data authorName mengandung spasi.
+     *
+     * @param [type] $item
+     * @return void
+     */
+    public function getAuthorId1($item)
+    {
+        $authorName = $this->getAuthorName($item);
+        return str_replace(' ', '+', $authorName);
+    }
+
+    public function getAuthorId2($item)
     {
         return collect($item->tags)
             ->pluck('id')
+            ->first() ?? 'anonymous';
+    }
+
+    public function getAuthorTag($item)
+    {
+        return collect($item->tags)
+            ->pluck('type')
             ->first() ?? 'anonymous';
     }
 }

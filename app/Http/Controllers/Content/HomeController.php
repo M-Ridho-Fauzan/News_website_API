@@ -18,16 +18,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $query = '12 years a slave';
-        $kategori = 'film';
-        $author = '';
-        $isi = 2;
-
-        $posts = $this->postsServices->getPosts($query, $kategori, $author, $isi);
-
-        // dd($posts);
-
+        $posts = $this->postsServices->getPosts('12 years a slave', 'film', '', 10);
         return view('home', compact('posts'));
-        // return view('home');
     }
 }

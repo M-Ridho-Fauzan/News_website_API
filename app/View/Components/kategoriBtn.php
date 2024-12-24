@@ -2,10 +2,8 @@
 
 namespace App\View\Components;
 
-use Closure;
 use Illuminate\View\Component;
 use App\Services\AdditionalService;
-use Illuminate\Contracts\View\View;
 
 class kategoriBtn extends Component
 {

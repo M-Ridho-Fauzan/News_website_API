@@ -18,3 +18,7 @@ button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.img-down {
+  image-rendering: crisp-edges;
+}

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\PostsService;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,10 +22,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // View::composer('*', function ($view) {
-        //     $postsService = app(PostsService::class);
-        //     $posts = $postsService->getPosts('search-query', 'kategori', 'author', 10);
-        //     $view->with('posts', $posts);
-        // });
+        View::composer('home', function ($view) {
+            $postsService = app(PostsService::class);
+
+            // try {
+            $posts = $postsService
+                ->getPosts('', 'film', '', 10);
+
+            // dd($postsService);
+            // dd($posts);
+            // } catch (\Exception $e) {
+            //     $posts = collect([]); // Jika gagal, fallback ke collection kosong
+            //     Log::error('Gagal memuat data: ' . $e->getMessage());
+            // }
+
+            $view->with('posts', $posts);
+        });
     }
 }
