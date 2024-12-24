@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+                    <x-kategori-btn>
+                              Kategori      
+                    </x-kategori-btn>
                 </div>
             </div>
 

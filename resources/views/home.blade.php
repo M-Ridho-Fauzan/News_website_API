@@ -61,7 +61,7 @@
                                     <h2 class="text-xl font-semibold text-black dark:text-white">{{ $posts[0]['webTitle'] }}</h2>
 
                                     <p class="mt-4 text-sm/relaxed">
-                                        {!! $posts[0]['body'] !!}
+                                        {{ $posts[0]['desk'] }}
                                     </p>
                                 </div>
                             </div>

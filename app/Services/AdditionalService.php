@@ -2,31 +2,35 @@
 
 namespace App\Services;
 
-use Guardian\GuardianAPI;
+use App\Services\Processor\KategoriProcessor;
+use App\Traits\GuardianTrait;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Exception\RequestException;
 
-class AdditionalService
+class AdditionalService extends KategoriProcessor
 {
-    private $api;
+    use GuardianTrait;
 
-    public function __construct()
+    public function getSections($paginate)
     {
-        $this->api = new GuardianAPI('c3c30a7c-75e9-4a61-989a-e08d2bd1e508');
-    }
+        $api = $this->getGuardianAPI();
 
-    public function getSections()
-    {
         try {
-            $response = $this->api->sections()
-                ->setQuery("business")
+            $response = $api->sections()
                 ->fetch();
 
-            dd($response);
+            // dd($response);
 
             $results = $response->response->results;
 
-            return $results;
+            if (count($results) > 0) {
+                $processedItems = collect($results)->random($paginate)->map(function ($item) {
+                    return $this->processKategoriItem($item);
+                });
+                return $processedItems;
+            } else {
+                return [];
+            }
         } catch (RequestException $exception) {
             Log::error('Guardian API Error: ' . $exception->getMessage());
 

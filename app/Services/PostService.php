@@ -2,18 +2,13 @@
 
 namespace App\Services;
 
-use Guardian\GuardianAPI;
+use App\Traits\GuardianTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Client\RequestException;
 
 class PostService
 {
-    private $api;
-
-    public function __construct()
-    {
-        $this->api = new GuardianAPI('c3c30a7c-75e9-4a61-989a-e08d2bd1e508');
-    }
+    use GuardianTrait;
 
     /**
      * Get all posts
@@ -24,8 +19,10 @@ class PostService
      */
     public function getPost($contentId)
     {
+        $api = $this->getGuardianAPI();
+
         try {
-            $response = $this->api->singleItem()
+            $response = $api->singleItem()
                 ->setId($contentId) // Set the content ID
                 ->setShowStoryPackage(true) // Optionally show related story packages
                 ->setShowFields("headline,body,thumbnail") // Specify fields to show

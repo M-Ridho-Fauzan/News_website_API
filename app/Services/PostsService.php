@@ -2,31 +2,36 @@
 
 namespace App\Services;
 
-use Guardian\GuardianAPI;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
-use App\Services\Processor\PostsProcessor;
 use App\Traits\GuardianTrait;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+use App\Services\Processor\PostsProcessor;
 use Illuminate\Http\Client\RequestException;
 
 class PostsService extends PostsProcessor
 {
     use GuardianTrait;
 
-    public function getPosts($search, $kategori, $paginate)
+    public function getPosts($search, $kategori, $author, $paginate)
     {
+        // $cacheKey = "posts_{$search}_{$kategori}_{$author}_{$paginate}";
+
+        // return Cache::remember(
+        //     $cacheKey,
+        //     now()->addMinutes(10),
+        //     function () use ($search, $kategori, $author, $paginate) {
         $api = $this->getGuardianAPI();
 
         try {
-            $response = retry(3, function () use ($api, $search, $kategori) {
+            $response = retry(3, function () use ($api, $search, $kategori, $author) {
                 return $api->content()
                     ->setQuery($search)
                     ->setOrderBy("relevance")
+                    ->setTag($author)
                     // ->setUseDate('newest')
                     ->setShowTags("contributor,blog")
-                    ->setShowFields("headline,thumbnail,short-url,publication,body")
+                    ->setShowFields("trailText,thumbnail,short-url,lastModified,score")
+                    // ->setShowFields("all")
                     ->setShowReferences("author")
                     ->setSection($kategori)
                     ->fetch();
@@ -34,8 +39,12 @@ class PostsService extends PostsProcessor
 
             $results = $response->response->results;
 
+            // dd($results);
+
+            // return $results;
+
             if (count($results) > 0) {
-                $processedItems = collect($results)->take(min($paginate, count($results)))->map(function ($item) {
+                $processedItems = collect($results)->random($paginate)->map(function ($item) {
                     return $this->processNewsItem($item);
                 });
                 return $processedItems;
@@ -51,5 +60,7 @@ class PostsService extends PostsProcessor
                 $statusCode
             );
         }
+        //     }
+        // );
     }
 }

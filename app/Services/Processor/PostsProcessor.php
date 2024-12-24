@@ -10,18 +10,22 @@ class PostsProcessor
     public function processNewsItem($item)
     {
         $formattedDate = Carbon::parse($item->webPublicationDate)->isoFormat('LL LT');
+        $lastModified = Carbon::parse($item->fields->lastModified)->isoFormat('LL LT');
 
         return [
             'id' => $item->id,
+            'type' => $item->type,
             'webTitle' => Str::limit(strip_tags($item->webTitle), 44),
             'thumbnail' => $item->fields->thumbnail ?? null,
-            'publication' => $item->fields->publication,
             'authorImage' => $this->getAuthorImage($item),
             'authorName' => $this->getAuthorName($item),
-            'body' => $item->fields->body,
+            'authorId' => $this->getAuthorId($item),
+            'desk' => $item->fields->trailText,
             'shortUrl' => $item->fields->shortUrl,
-            'cartegory' => $item->sectionName,
+            'kategori' => $item->sectionName,
+            'kategoriLink' => $item->sectionId,
             'published' => $formattedDate,
+            'updated' => $lastModified,
         ];
     }
 
@@ -39,5 +43,12 @@ class PostsProcessor
         return collect($item->tags)
             ->pluck('webTitle')
             ->first() ?? 'Anonymous';
+    }
+
+    public function getAuthorId($item)
+    {
+        return collect($item->tags)
+            ->pluck('id')
+            ->first() ?? 'anonymous';
     }
 }

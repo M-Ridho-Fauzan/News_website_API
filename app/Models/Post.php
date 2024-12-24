@@ -19,14 +19,6 @@ class Post extends Model
     protected $guarded = ['id'];
 
     /**
-     * Get the user that owns the post.
-     */
-    public function author(): belongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
      * Get the category that owns the post.
      */
     public function kategori(): belongsTo
@@ -34,31 +26,31 @@ class Post extends Model
         return $this->belongsTo(Kategori::class);
     }
 
-    /**
-     * Scope a query to only include popular users.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  array  $filters
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeFilter(Builder $query, $filters)
-    {
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('content', 'like', '%' . $search . '%')
-                    ->orWhereHas('kategori', function ($query) use ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
-                    });
-            });
-        });
+    // /**
+    //  * Scope a query to only include popular users.
+    //  *
+    //  * @param  \Illuminate\Database\Eloquent\Builder  $query
+    //  * @param  array  $filters
+    //  * @return \Illuminate\Database\Eloquent\Builder
+    //  */
+    // public function scopeFilter(Builder $query, $filters)
+    // {
+    //     $query->when($filters['search'] ?? false, function ($query, $search) {
+    //         $query->where(function ($query) use ($search) {
+    //             $query->where('title', 'like', '%' . $search . '%')
+    //                 ->orWhere('content', 'like', '%' . $search . '%')
+    //                 ->orWhereHas('kategori', function ($query) use ($search) {
+    //                     $query->where('name', 'like', '%' . $search . '%');
+    //                 });
+    //         });
+    //     });
 
-        $query->when($filters['kategori'] ?? false, function ($query, $kategori) {
-            $query->whereHas('kategori', function ($query) use ($kategori) {
-                $query->where('slug', $kategori);
-            });
-        });
+    //     $query->when($filters['kategori'] ?? false, function ($query, $kategori) {
+    //         $query->whereHas('kategori', function ($query) use ($kategori) {
+    //             $query->where('slug', $kategori);
+    //         });
+    //     });
 
-        return $query;
-    }
+    //     return $query;
+    // }
 }
