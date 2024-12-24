@@ -18,16 +18,21 @@ class HomeController extends Controller
 
     public function index()
     {
-        $query = '12 years a slave';
-        $kategori = 'film';
-        $isi = 2;
+        try {
+            $query = '12 years a slave';
+            $kategori = 'film';
+            $isi = 2;
 
-        $results = $this->postsServices->getPosts($query, $kategori, $isi);
+            $results = $this->postsServices->getPosts($query, $kategori, $isi);
 
-        dd($results);
+            dd($results);
 
-        return view('home', [
-            'results' => $results,
-        ]);
+            return view('home', [
+                'results' => $results,
+            ]);
+        } catch (\Exception $e) {
+            // Jika terjadi error, kirimkan error ke view
+            return view('errors.500', ['message' => $e->getMessage()], 500);
+        }
     }
 }

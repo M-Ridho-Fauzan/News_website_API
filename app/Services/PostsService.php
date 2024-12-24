@@ -5,38 +5,37 @@ namespace App\Services;
 use Guardian\GuardianAPI;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use App\Services\Processor\PostsProcessor;
+use App\Traits\GuardianTrait;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\RequestException;
 
-class PostsService
+class PostsService extends PostsProcessor
 {
-    protected $api;
-
-    public function __construct()
-    {
-        $this->api = new GuardianAPI('c3c30a7c-75e9-4a61-989a-e08d2bd1e508');
-    }
+    use GuardianTrait;
 
     public function getPosts($search, $kategori, $paginate)
     {
+        $api = $this->getGuardianAPI();
+
         try {
-            $response = $this->api->content()
-                ->setQuery($search)
-                ->setOrderBy("relevance")
-                // ->setUseDate('newest')
-                ->setShowTags("contributor,blog")
-                ->setShowFields("headline,thumbnail,short-url,publication,body")
-                ->setShowReferences("author,isbn,opta-cricket-match")
-                ->setSection($kategori)
-                ->fetch();
+            $response = retry(3, function () use ($api, $search, $kategori) {
+                return $api->content()
+                    ->setQuery($search)
+                    ->setOrderBy("relevance")
+                    // ->setUseDate('newest')
+                    ->setShowTags("contributor,blog")
+                    ->setShowFields("headline,thumbnail,short-url,publication,body")
+                    ->setShowReferences("author")
+                    ->setSection($kategori)
+                    ->fetch();
+            }, 5000); // Retry 3 kali dengan jeda 5 detik
 
             $results = $response->response->results;
 
-            // dd($results);
-
             if (count($results) > 0) {
-                $processedItems = collect($results)->random($paginate)->map(function ($item) {
+                $processedItems = collect($results)->take(min($paginate, count($results)))->map(function ($item) {
                     return $this->processNewsItem($item);
                 });
                 return $processedItems;
@@ -45,44 +44,12 @@ class PostsService
             }
         } catch (RequestException $exception) {
             Log::error('Guardian API Error: ' . $exception->getMessage());
-            Log::error('Response Body getNews: ' . $exception->response->body());
-
-            return [];
+            $statusCode = $exception->getCode();
+            return response()->view(
+                "errors.$statusCode",
+                ['message' => $exception->getMessage()],
+                $statusCode
+            );
         }
-    }
-
-    public function processNewsItem($item)
-    {
-        $formattedDate = Carbon::parse($item->webPublicationDate)->isoFormat('LL LT');
-
-        $processedItem = [
-            'id' => $item->id,
-            'webTitle' => Str::limit(strip_tags($item->webTitle), 44),
-            'thumbnail' => isset($item->fields->thumbnail) ? $item->fields->thumbnail : null,
-            'publication' => $item->fields->publication,
-            'authorImage' => $this->getAuthorImage($item),
-            'authorName' => $this->getAuthorName($item),
-            'body' => $item->fields->body,
-            'shortUrl' => $item->fields->shortUrl,
-            'cartegory' => $item->sectionName,
-            'published' => $formattedDate,
-        ];
-        return $processedItem;
-    }
-
-    public function getAuthorImage($item)
-    {
-        if (!empty($item->tags)) {
-            $tag = $item->tags[0];
-            return $tag->bylineLargeImageUrl ?? $tag->bylineImageUrl ?? '/../img/randomUser.png';
-        }
-        return null;
-    }
-
-    public function getAuthorName($item)
-    {
-        return collect($item->tags)
-            ->pluck('webTitle')
-            ->first() ?? 'Anonymous';
     }
 }
