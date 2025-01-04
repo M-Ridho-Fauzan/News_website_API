@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\PostsService;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         View::composer('home', function ($view) {
             $data = $this->prepareHomePageData();
             $view->with($data);
@@ -30,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
             $posts = $this->prepareAllPostData();
             $view->with('posts', $posts);
         });
+
+        Blade::directive('queryUrl', function ($expression) {
+            // Buat fungsi buildQueryUrl untuk digunakan di directive
+            return "<?php echo buildQueryUrl({$expression}[0], {$expression}[1]); ?>";
+        });
     }
 
     private function prepareHomePageData()
@@ -37,12 +44,33 @@ class AppServiceProvider extends ServiceProvider
         $postsService = app(PostsService::class);
 
         return [
-            'trends' => $postsService->getPosts('', '', '', 3, 3),
-            'popular' => $postsService->getPosts('', '', '', 2, 2),
-            'posts' => $postsService->getPosts('', '', '', 6, 6),
+            'trends' => $postsService->getPosts('', '', '', '', 20, 6),
+            'popular' => $postsService->getPosts('', '', '', '', 20, 6),
+            'posts' => $postsService->getPosts('', '', '', '', 20, 6),
         ];
     }
 
+    // private function prepareAllPostData()
+    // {
+    //     $postsService = app(PostsService::class);
+
+    //     // Ambil parameter dari request
+    //     $search = request('search', ''); // Default ke string kosong jika tidak ada
+    //     $filter = request('filter', ''); // Default ke string kosong jika tidak ada
+    //     $kategori = request('kategori', ''); // Default ke string kosong jika tidak ada
+
+    //     $posts = $postsService->getPosts($search, $kategori, $filter, '', 20, 6);
+
+    //     $posts->appends(request()->except('page'));
+
+    //     // // Tambahkan query parameter ke pagination URL
+    //     // $posts->appends(array_filter([
+    //     //     'search' => $search,
+    //     //     'filter' => $filter,
+    //     // ]));
+
+    //     return $posts;
+    // }
     private function prepareAllPostData()
     {
         $postsService = app(PostsService::class);
@@ -50,16 +78,27 @@ class AppServiceProvider extends ServiceProvider
         // Ambil parameter dari request
         $search = request('search', ''); // Default ke string kosong jika tidak ada
         $filter = request('filter', ''); // Default ke string kosong jika tidak ada
+        $kategori = request('kategori', ''); // Default ke string kosong jika tidak ada
 
-        $posts = $postsService->getPosts($search, $filter, '', 20, 6);
+        // Buat array parameter dan hilangkan parameter yang kosong
+        $queryParams = array_filter([
+            'search' => $search,
+            'filter' => $filter,
+            'kategori' => $kategori,
+        ], fn($value) => !is_null($value) && $value !== '');
 
-        $posts->appends(request()->except('page'));
+        // Ambil data dari service
+        $posts = $postsService->getPosts(
+            $queryParams['search'] ?? '',
+            $queryParams['kategori'] ?? '',
+            $queryParams['filter'] ?? '',
+            '',
+            20,
+            6
+        );
 
-        // // Tambahkan query parameter ke pagination URL
-        // $posts->appends(array_filter([
-        //     'search' => $search,
-        //     'filter' => $filter,
-        // ]));
+        // Tambahkan query parameter ke pagination URL
+        $posts->appends($queryParams);
 
         return $posts;
     }

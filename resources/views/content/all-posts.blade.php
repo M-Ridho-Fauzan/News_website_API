@@ -4,15 +4,6 @@
         <x-search-filter-form />
     </x-header>
 
-    @if (request('filter'))
-        <input type="hidden" name="filter" value="{{ request('filter') }}">
-    @elseif (request('search'))
-        <input type="hidden" name="search" value="{{ request('search') }}">
-    @elseif (request('search') && request('filter'))
-        <input type="hidden" name="search" value="{{ request('search') }}">
-        <input type="hidden" name="filter" value="{{ request('filter') }}">
-    @endif
-
     <div
         class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
         <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">

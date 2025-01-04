@@ -24,7 +24,7 @@
             </div>
         @else
             @foreach ($kategori as $item)
-                <x-dropdown-link href="{{ $item['id_kategori'] }}">
+                <x-dropdown-link href="{{ buildQueryUrl('all-post', ['kategori' => $item['id_kategori']]) }}">
                     {{ $item['nama_kategori'] }}
                 </x-dropdown-link>
             @endforeach

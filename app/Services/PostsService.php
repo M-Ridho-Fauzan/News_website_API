@@ -13,33 +13,43 @@ class PostsService extends PostsProcessor
 {
     use GuardianTrait;
 
-    public function getPosts($search, $kategori, $author, $addData, $paginate)
+    public function getPosts($search, $kategori, $orderBy, $author, $addData, $paginate)
     {
         $currentPage = request('page', 1);
         $offset = ($currentPage - 1) * $paginate;
 
-        $cacheKey = "posts_{$search}_{$kategori}_{$author}_{$addData}_{$paginate}_{$currentPage}";
+        $cacheKey = "posts_{$search}_{$kategori}_{$orderBy}_{$author}_{$addData}_{$paginate}_{$currentPage}";
 
         return Cache::remember(
             $cacheKey,
             now()->addMinutes(10),
-            function () use ($search, $kategori, $author, $addData, $paginate, $offset, $currentPage) {
+            function () use ($search, $kategori, $orderBy, $author, $addData, $paginate, $offset, $currentPage) {
                 $api = $this->getGuardianAPI();
 
                 try {
-                    $response = retry(3, function () use ($api, $search, $kategori, $author) {
-                        return $api->content()
+                    $response = retry(3, function () use ($api, $search, $kategori, $orderBy, $author) {
+                        $query = $api->content()
                             ->setQuery($search)
-                            ->setOrderBy("relevance")
-                            ->setTag($author)
-                            ->setShowTags("contributor,blog")
+                            ->setOrderBy($orderBy);
+
+                        if ($kategori) {
+                            $query->setSection($kategori);
+                        }
+
+                        $query->setShowTags("contributor,blog")
                             ->setShowFields("trailText,thumbnail,short-url,lastModified,score")
-                            ->setShowReferences("all")
-                            ->setSection($kategori)
-                            ->fetch();
+                            ->setShowReferences("all");
+
+                        if ($author) {
+                            $query->setTag($author);
+                        }
+
+                        return $query->fetch();
                     }, 5000);
 
                     $results = $response->response->results;
+
+                    // dd($results);
 
                     if (count($results) > 0) {
                         // Get total items based on addData limit if specified
@@ -62,7 +72,7 @@ class PostsService extends PostsProcessor
                             $currentPage,
                             [
                                 'path' => request()->url(),
-                                'query' => request()->except('page')
+                                'query' => array_filter(request()->except('page')),
                             ]
                         );
                     }
@@ -75,7 +85,7 @@ class PostsService extends PostsProcessor
                         $currentPage,
                         [
                             'path' => request()->url(),
-                            'query' => request()->except('page')
+                            'query' => array_filter(request()->except('page')),
                         ]
                     );
                 } catch (RequestException $exception) {
