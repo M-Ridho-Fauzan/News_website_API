@@ -15,8 +15,13 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('all-post')" :active="request()->routeIs('all-post')">
+                        {{ __('All Posts') }}
+                    </x-nav-link>
+
                     <x-kategori-btn>
-                              Kategori      
+                        Kategori
                     </x-kategori-btn>
                 </div>
             </div>

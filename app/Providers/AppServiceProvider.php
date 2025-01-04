@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Services\PostsService;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,20 +22,45 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('home', function ($view) {
-            $postsService = app(PostsService::class);
+            $data = $this->prepareHomePageData();
+            $view->with($data);
+        });
 
-            // try {
-            $posts = $postsService
-                ->getPosts('', 'film', '', 10);
-
-            // dd($postsService);
-            // dd($posts);
-            // } catch (\Exception $e) {
-            //     $posts = collect([]); // Jika gagal, fallback ke collection kosong
-            //     Log::error('Gagal memuat data: ' . $e->getMessage());
-            // }
-
+        View::composer('content.all-posts', function ($view) {
+            $posts = $this->prepareAllPostData();
             $view->with('posts', $posts);
         });
+    }
+
+    private function prepareHomePageData()
+    {
+        $postsService = app(PostsService::class);
+
+        return [
+            'trends' => $postsService->getPosts('', '', '', 3, 3),
+            'popular' => $postsService->getPosts('', '', '', 2, 2),
+            'posts' => $postsService->getPosts('', '', '', 6, 6),
+        ];
+    }
+
+    private function prepareAllPostData()
+    {
+        $postsService = app(PostsService::class);
+
+        // Ambil parameter dari request
+        $search = request('search', ''); // Default ke string kosong jika tidak ada
+        $filter = request('filter', ''); // Default ke string kosong jika tidak ada
+
+        $posts = $postsService->getPosts($search, $filter, '', 20, 6);
+
+        $posts->appends(request()->except('page'));
+
+        // // Tambahkan query parameter ke pagination URL
+        // $posts->appends(array_filter([
+        //     'search' => $search,
+        //     'filter' => $filter,
+        // ]));
+
+        return $posts;
     }
 }

@@ -16,7 +16,7 @@ class PostsProcessor
             'id' => $item->id,
             'type' => $item->type,
             'webTitle' => Str::limit(strip_tags($item->webTitle), 44),
-            'thumbnail' => $item->fields->thumbnail ?? null,
+            'thumbnail' => isset($item->fields->thumbnail) ? $item->fields->thumbnail : asset('/img/no-post.png') ,
             'authorImage' => $this->getAuthorImage($item),
             'authorName' => $this->getAuthorName($item),
             'authorId1' => $this->getAuthorId1($item),

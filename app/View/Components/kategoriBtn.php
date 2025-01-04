@@ -4,6 +4,8 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use App\Services\AdditionalService;
+use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Exception\RequestException;
 
 class kategoriBtn extends Component
 {
@@ -13,7 +15,15 @@ class kategoriBtn extends Component
      */
     public function __construct(AdditionalService $kategoriServices)
     {
-        $this->kategori = $kategoriServices->getSections(10);
+        // $this->kategori = $kategoriServices->getSections(10);
+
+        // dd($this->kategori);
+        try {
+            $this->kategori = $kategoriServices->getSections(10);
+        } catch (RequestException $e) {
+            Log::error('Failed to fetch categories: ' . $e->getMessage());
+            $this->kategori = collect([]); // Pastikan selalu ada nilai default
+        }
     }
 
     /**
@@ -21,6 +31,8 @@ class kategoriBtn extends Component
      */
     public function render()
     {
-        return view('components.kategori-btn');
+        return view('components.kategori-btn', [
+            'kategori' => $this->kategori
+        ]);
     }
 }

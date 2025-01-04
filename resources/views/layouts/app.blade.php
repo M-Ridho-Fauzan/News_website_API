@@ -22,17 +22,29 @@
 
         <!-- Page Heading -->
         @isset($header)
-        <header class="bg-white shadow dark:bg-gray-800">
-            <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
+            <header class="bg-white shadow dark:bg-gray-800">
+                <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
         @endisset
 
         <!-- Page Content -->
         <main>
             {{ $slot }}
         </main>
+
+        <footer class="pt-16 text-sm text-center text-black dark:text-white/70">
+            <div>Build with <span class="text-pink-500">❤️</span> Make Laravel
+                v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) &
+                Tailwind v3.1.0
+            </div>
+            <div>
+                <p class="text-xs">
+                    Copyright © 2024/2025 <span class="text-pink-500">❤️</span>WPU Unpas
+                </p>
+            </div>
+        </footer>
     </div>
 
     <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>

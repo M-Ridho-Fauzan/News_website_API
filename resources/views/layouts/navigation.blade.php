@@ -20,7 +20,13 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-kategori-btn />
+                    <x-nav-link :href="route('all-post')" :active="request()->routeIs('all-post')">
+                        {{ __('all-posts') }}
+                    </x-nav-link>
+
+                    <x-kategori-btn>
+                        {{ __('Kategori') }}
+                    </x-kategori-btn>
                 </div>
             </div>
 

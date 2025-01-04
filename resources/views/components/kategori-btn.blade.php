@@ -4,7 +4,7 @@
         <button
             class="inline-flex items-center py-5 font-medium leading-4 text-gray-500 transition duration-150 ease-in-out border-indigo-400 hover:border-b-2 group dark:text-gray-400 focus:outline-none">
             <x-nav-link class="border-none group-hover:text-gray-700 dark:group-hover:text-gray-300">
-                {{ __("Kategori") }}
+                {{ __('Kategori') }}
             </x-nav-link>
             <div class="ms-1">
                 <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -16,12 +16,23 @@
         </button>
     </x-slot>
 
-    <x-slot name="content">
-        @foreach ( $kategori as $item )
-        {{-- @dd($item['id_kategori']) --}}
-        <x-dropdown-link href="{{ $item['id_kategori'] }}">
-            {{ $item['nama_kategori'] }}
-        </x-dropdown-link>
-        @endforeach
+    <x-slot name="content" class="z-20">
+        {{-- @dd($kategori) --}}
+        @if ($kategori->isEmpty())
+            <div class="p-4 text-gray-500">
+                No categories available
+            </div>
+        @else
+            @foreach ($kategori as $item)
+                <x-dropdown-link href="{{ $item['id_kategori'] }}">
+                    {{ $item['nama_kategori'] }}
+                </x-dropdown-link>
+            @endforeach
+        @endif
+        {{-- 
+                Jika ada error $kategori undefined, maka masukan ini ke terminal:
+                - php artisan view:clear
+                - php artisan cache:clear
+        --}}
     </x-slot>
 </x-dropdown>
