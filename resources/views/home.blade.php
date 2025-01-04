@@ -1,17 +1,13 @@
 <x-guest-layout>
 
+    <x-header title="{{ __('Home') }}">
+        <x-search-filter-form />
+    </x-header>
+
     <div
         class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
 
         <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-
-            <x-slot name="header">
-
-                <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    {{ __('Home') }}
-                </h2>
-
-            </x-slot>
 
             <main class="mt-40 mb-28">
                 <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
