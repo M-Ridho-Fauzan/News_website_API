@@ -23,21 +23,15 @@ class AdditionalService extends KategoriProcessor
                 $api = $this->getGuardianAPI();
 
                 try {
-                    $response = $api->sections()
-                        ->fetch();
+                    $response = $api->sections()->fetch();
 
                     // dd($response);
 
                     $results = $response->response->results;
 
-                    if (count($results) > 0) {
-                        $processedItems = collect($results)->random($paginate)->map(function ($item) {
-                            return $this->processKategoriItem($item);
-                        });
-                        return $processedItems;
-                    } else {
-                        return [];
-                    }
+                    return count($results) > 0
+                        ? collect($results)->random($paginate)->map(fn($item) => $this->processKategoriItem($item))
+                        : collect([]); // Default jika tidak ada hasil
                 } catch (RequestException $exception) {
                     Log::error('Guardian API Error: ' . $exception->getMessage());
 

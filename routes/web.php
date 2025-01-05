@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\Content\AllPostsController;
 use App\Http\Controllers\Content\HomeController;
 use App\Http\Controllers\Content\KategoriController;
 use App\Http\Controllers\Content\SinglePostController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/all-post', [AllPostsController::class, 'index'])->name('all-post');
 Route::get('/all-post/single-post/{id}', [SinglePostController::class, 'index'])
     ->where('id', '.*')
     ->name('single-post');

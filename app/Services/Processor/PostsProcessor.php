@@ -16,7 +16,7 @@ class PostsProcessor
             'id' => $item->id,
             'type' => $item->type,
             'webTitle' => Str::limit(strip_tags($item->webTitle), 44),
-            'thumbnail' => $item->fields->thumbnail ?? null,
+            'thumbnail' => isset($item->fields->thumbnail) ? $item->fields->thumbnail : asset('/img/no-post.png'),
             'authorImage' => $this->getAuthorImage($item),
             'authorName' => $this->getAuthorName($item),
             'authorId1' => $this->getAuthorId1($item),
@@ -33,18 +33,17 @@ class PostsProcessor
 
     public function getAuthorImage($item)
     {
-        if (!empty($item->tags)) {
-            $tag = $item->tags[0];
-            return $tag->bylineLargeImageUrl ?? $tag->bylineImageUrl ?? asset('/img/no-profile.png');
-        }
-        return asset('/img/no-profile.png');
+        return collect($item->tags)
+            ->firstWhere('type', 'contributor')?->bylineLargeImageUrl
+            ?? collect($item->tags)
+            ->firstWhere('type', 'contributor')?->bylineImageUrl
+            ?? asset('/img/no-profile.png');
     }
 
     public function getAuthorName($item)
     {
         return collect($item->tags)
-            ->pluck('webTitle')
-            ->first() ?? 'Anonymous';
+            ->firstWhere('type', 'contributor')?->webTitle ?? 'Anonymous';
     }
 
     /**
@@ -62,8 +61,7 @@ class PostsProcessor
     public function getAuthorId2($item)
     {
         return collect($item->tags)
-            ->pluck('id')
-            ->first() ?? 'anonymous';
+            ->firstWhere('type', 'contributor')?->id ?? 'anonymous';
     }
 
     public function getAuthorTag($item)

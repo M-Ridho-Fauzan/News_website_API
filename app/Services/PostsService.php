@@ -7,51 +7,98 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use App\Services\Processor\PostsProcessor;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PostsService extends PostsProcessor
 {
     use GuardianTrait;
 
-    public function getPosts($search, $kategori, $author, $paginate)
+    public function getPosts($search, $kategori, $orderBy, $author, $addData, $paginate)
     {
-        $cacheKey = "posts_{$search}_{$kategori}_{$author}_{$paginate}";
+        $currentPage = request('page', 1);
+        $offset = ($currentPage - 1) * $paginate;
+
+        $cacheKey = "posts_{$search}_{$kategori}_{$orderBy}_{$author}_{$addData}_{$paginate}_{$currentPage}";
 
         return Cache::remember(
             $cacheKey,
             now()->addMinutes(10),
-            function () use ($search, $kategori, $author, $paginate) {
+            function () use ($search, $kategori, $orderBy, $author, $addData, $paginate, $offset, $currentPage) {
                 $api = $this->getGuardianAPI();
 
                 try {
-                    $response = retry(3, function () use ($api, $search, $kategori, $author) {
-                        return $api->content()
+                    $response = retry(3, function () use ($api, $search, $kategori, $orderBy, $author) {
+                        $query = $api->content()
                             ->setQuery($search)
-                            ->setOrderBy("relevance")
-                            ->setTag($author)
-                            // ->setUseDate('newest')
-                            ->setShowTags("contributor,blog")
+                            ->setOrderBy($orderBy);
+
+                        if ($kategori) {
+                            $query->setSection($kategori);
+                        }
+
+                        $query->setShowTags("contributor,blog")
                             ->setShowFields("trailText,thumbnail,short-url,lastModified,score")
-                            // ->setShowFields("all")
-                            ->setShowReferences("all")
-                            ->setSection($kategori)
-                            ->fetch();
-                        // } 
-                    }, 5000); // Retry 3 kali dengan jeda 5 detik
+                            ->setShowReferences("all");
+
+                        if ($author) {
+                            $query->setTag($author);
+                        }
+
+                        return $query->fetch();
+                    }, 5000);
 
                     $results = $response->response->results;
 
                     // dd($results);
 
-                    // return $results;
-
                     if (count($results) > 0) {
-                        $processedItems = collect($results)->random($paginate)->map(function ($item) {
+                        // Get total items based on addData limit if specified
+                        $totalItems = $addData > 0 ? min(count($results), $addData) : count($results);
+
+                        // Calculate which items we need for the current page
+                        $pageEndIndex = min($offset + $paginate, $totalItems);
+                        $itemsNeeded = array_slice($results, $offset, $paginate);
+
+                        // Process only the items needed for this page
+                        $processedItems = collect($itemsNeeded)->map(function ($item) {
                             return $this->processNewsItem($item);
                         });
-                        return $processedItems;
-                    } else {
-                        return [];
+
+                        // dd(new LengthAwarePaginator(
+                        //     $processedItems,
+                        //     $totalItems,
+                        //     $paginate,
+                        //     $currentPage,
+                        //     [
+                        //         'path' => request()->url(),
+                        //         'query' => array_filter(request()->except('page')),
+                        //     ]
+                        // ));
+
+                        // Create paginator with correct total count
+                        return new LengthAwarePaginator(
+                            $processedItems,
+                            $totalItems,
+                            $paginate,
+                            $currentPage,
+                            [
+                                'path' => request()->url(),
+                                'query' => array_filter(request()->except('page')),
+                            ]
+                        );
                     }
+
+                    // Return empty paginator if no results
+                    return new LengthAwarePaginator(
+                        collect([]),
+                        0,
+                        $paginate,
+                        $currentPage,
+                        [
+                            'path' => request()->url(),
+                            'query' => array_filter(request()->except('page')),
+                        ]
+                    );
                 } catch (RequestException $exception) {
                     Log::error('Guardian API Error: ' . $exception->getMessage());
                     $statusCode = $exception->getCode();

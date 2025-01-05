@@ -36,17 +36,21 @@
             src="https://laravel.com/assets/img/welcome/background.svg" alt="Laravel background" />
     </div>
 
-    @isset($header)
-        <header class="relative bg-white shadow dark:bg-gray-800">
-            <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
-    @endisset
-
     <div>
         {{ $slot }}
     </div>
+
+    <footer class="pt-16 pb-8 text-sm text-center text-black dark:text-gray-500/70">
+        <div>Build with <span class="text-pink-500 dark:text-pink-500/40">❤️</span> Make Laravel
+            v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) &
+            Tailwind v3.1.0
+        </div>
+        <div>
+            <p class="text-xs">
+                Copyright © 2024/2025 <span class="text-pink-500 dark:text-pink-500/40">❤️</span>WPU Unpas
+            </p>
+        </div>
+    </footer>
 
     <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
 </body>

@@ -7,7 +7,7 @@ use App\Services\AdditionalService;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Exception\RequestException;
 
-class kategoriBtn extends Component
+class ResponsivekategoriBtn extends Component
 {
     public $kategori;
     /**
@@ -31,7 +31,7 @@ class kategoriBtn extends Component
      */
     public function render()
     {
-        return view('components.kategori-btn', [
+        return view('components.responsive-kategori-btn', [
             'kategori' => $this->kategori
         ]);
     }
