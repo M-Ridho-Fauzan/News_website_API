@@ -76,9 +76,9 @@ class AppServiceProvider extends ServiceProvider
         $postsService = app(PostsService::class);
 
         // Ambil parameter dari request
-        $search = request('search', ''); // Default ke string kosong jika tidak ada
-        $filter = request('filter', ''); // Default ke string kosong jika tidak ada
-        $kategori = request('kategori', ''); // Default ke string kosong jika tidak ada
+        $search = request('search', '');
+        $filter = request('filter', '');
+        $kategori = request('kategori', '');
 
         // Buat array parameter dan hilangkan parameter yang kosong
         $queryParams = array_filter([
@@ -99,6 +99,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Tambahkan query parameter ke pagination URL
         $posts->appends($queryParams);
+
+        // dd($posts);
 
         return $posts;
     }

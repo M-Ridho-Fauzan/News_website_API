@@ -62,12 +62,13 @@
 
                                     <ul
                                         class="flex flex-row gap-2 *:rounded-full *:border *:border-[#FF2D20] *:bg-[#FF2D20]/10 *:px-2 *:py-0.5 *:text-xs sm:*:text-sm dark:text-[#FF2D20] dark:*:border-[#FF2D20]/15">
-                                        <a class=" hover:underline" href="{{ $rl['kategoriLink'] }}">
+                                        <a class=" hover:underline"
+                                            href="{{ buildQueryUrl('all-post', ['kategori' => $rl['kategoriLink']]) }}">
                                             {{ $rl['kategori'] }}
                                         </a>
-                                        <a class=" hover:underline" href="{{ $rl['type'] }}">
+                                        <span>
                                             {{ $rl['type'] }}
-                                        </a>
+                                        </span>
                                     </ul>
                                 </div>
                             </div>

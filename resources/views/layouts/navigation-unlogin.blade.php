@@ -97,6 +97,14 @@
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Home') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('all-post')" :active="request()->routeIs('all-post')">
+                {{ __('All Posts') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-kategori-btn>
+                {{ __('Kategori') }}
+            </x-responsive-kategori-btn>
         </div>
 
         <!-- Responsive Settings Options -->

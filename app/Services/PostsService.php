@@ -64,6 +64,17 @@ class PostsService extends PostsProcessor
                             return $this->processNewsItem($item);
                         });
 
+                        // dd(new LengthAwarePaginator(
+                        //     $processedItems,
+                        //     $totalItems,
+                        //     $paginate,
+                        //     $currentPage,
+                        //     [
+                        //         'path' => request()->url(),
+                        //         'query' => array_filter(request()->except('page')),
+                        //     ]
+                        // ));
+
                         // Create paginator with correct total count
                         return new LengthAwarePaginator(
                             $processedItems,
