@@ -29,7 +29,7 @@ class SocialiteController extends Controller
 
         Auth::login($authUser);
 
-        return redirect("/dashboard");
+        return redirect("/");
             } catch (\Exception $e) {
         return redirect('/login')->with('error', 'Something went wrong!');
     }

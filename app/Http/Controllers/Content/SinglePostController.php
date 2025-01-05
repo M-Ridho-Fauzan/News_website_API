@@ -8,22 +8,24 @@ use App\Http\Controllers\Controller;
 
 class SinglePostController extends Controller
 {
-    private $postServices;
+private PostService $postService;
 
-    public function __construct(PostService $postServices)
+    public function __construct(PostService $postService)
     {
-        $this->postServices = $postServices;
+        $this->postService = $postService;
     }
 
-    public function index($id)
+public function index(string $id)
     {
-        // $id = "/sport/2022/oct/07/cricket-jos-buttler-primed-for-england-comeback-while-phil-salt-stays-focused";
-        $merged =  "/" . $id;
+        $merged = "/$id";
+        $post = $this->postService->getPost($merged);
 
-        $results = $this->postServices->getPost($merged);
+        if ($post->isEmpty()) {
+            abort(404, 'Post not found');
+        }
 
-        dd($results);
+        // dd($post);
 
-        return view('content.single-post', compact('results'));
+        return view('content.single-post', ['post' => $post->first()]);
     }
 }

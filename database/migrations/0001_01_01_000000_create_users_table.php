@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('user_img')->nullable();
             $table->string('name');
+            $table->boolean('is_admin')->default(false);
             $table->string('username')->default('Anounymous');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

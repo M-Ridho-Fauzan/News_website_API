@@ -81,7 +81,7 @@ Samakan terlebih dahulu ini, agar tidak **error**:
 -   **PHP**: 8.3.12
 -   **Node.js**: 20.18.0
 -   **MySQL**: 8.3.0
--   **Laragon**: Baraha Wae, terbaru alus na mah.
+-   **Laragon**: Terbaru.
 
 ### 🤖 Cara cek nya
 
