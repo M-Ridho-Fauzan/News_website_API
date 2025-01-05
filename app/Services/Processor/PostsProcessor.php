@@ -19,6 +19,7 @@ class PostsProcessor
             'thumbnail' => isset($item->fields->thumbnail) ? $item->fields->thumbnail : asset('/img/no-post.png'),
             'authorImage' => $this->getAuthorImage($item),
             'authorName' => $this->getAuthorName($item),
+            'authorUrl' => $this->getAuthorUrl($item),
             'authorId1' => $this->getAuthorId1($item),
             'authorId2' => $this->getAuthorId2($item),
             'authorTag' => $this->getAuthorTag($item),
@@ -44,6 +45,12 @@ class PostsProcessor
     {
         return collect($item->tags)
             ->firstWhere('type', 'contributor')?->webTitle ?? 'Anonymous';
+    }
+
+    public function getAuthorUrl($item)
+    {
+        return collect($item->tags)
+            ->firstWhere('type', 'contributor')?->webUrl;
     }
 
     /**

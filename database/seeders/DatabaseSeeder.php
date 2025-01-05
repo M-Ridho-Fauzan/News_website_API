@@ -16,12 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call([
-            KategoriesSeeder::class,
-        ]);
-
         User::factory()->create([
             'name' => 'Test User',
+            'is_admin' => true,
             'email' => 'test@example.com',
         ]);
     }

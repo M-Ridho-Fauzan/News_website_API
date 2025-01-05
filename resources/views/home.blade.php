@@ -110,9 +110,10 @@
                             </div>
                         </div>
                         <div class="flex items-center justify-between w-full">
-                            {{-- <a
+                            {{-- <a authorUrl
                                 href="{{ route('your.route.name', ['authorId1' => $trends[1]['authorId1'], 'authorId2' => $trends[1]['authorId2']]) }}"
-                                --}} <a href="" class="flex items-center gap-0 group sm:gap-3">
+                                --}} <a href="{{ $trends[1]['authorUrl'] }}" target="_blank"
+                                class="flex items-center gap-0 group sm:gap-3">
                                 <div
                                     class="flex size-9 overflow-hidden shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-10">
                                     <img class="size-9 sm:size-10 img-down" src="{{ $trends[1]['authorImage'] }}"
@@ -121,7 +122,8 @@
                                 <div class="px-3 sm:px-1">
                                     <div
                                         class="text-sm font-medium text-gray-800 group-hover:underline dark:text-gray-200">
-                                        {{ $trends[1]['authorName'] }}</div>
+                                        {{ $trends[1]['authorName'] }}
+                                    </div>
                                     <div class="text-xs font-medium text-gray-500">{{ $trends[1]['authorTag'] }}
                                     </div>
                                 </div>
@@ -129,12 +131,13 @@
 
                             <ul
                                 class="flex flex-row gap-2 *:rounded-full *:border *:border-[#FF2D20] *:bg-[#FF2D20]/10 *:px-2 *:py-0.5 *:text-xs sm:*:text-sm dark:text-[#FF2D20] dark:*:border-[#FF2D20]/15">
-                                <a class=" hover:underline" href="{{ $trends[1]['kategoriLink'] }}">
+                                <a class=" hover:underline"
+                                    href="{{ buildQueryUrl('all-post', ['kategori' => $trends[1]['kategoriLink']]) }}">
                                     {{ $trends[1]['kategori'] }}
                                 </a>
-                                <a class=" hover:underline" href="{{ $trends[1]['type'] }}">
+                                <span>
                                     {{ $trends[1]['type'] }}
-                                </a>
+                                </span>
                             </ul>
                         </div>
                     </div>
@@ -169,7 +172,8 @@
                         <div class="flex items-center justify-between w-full">
                             {{-- <a
                                 href="{{ route('your.route.name', ['authorId1' => $trends[2]['authorId1'], 'authorId2' => $trends[2]['authorId2']]) }}"
-                                --}} <a href="" class="flex items-center gap-0 group sm:gap-3">
+                                --}} <a href="{{ $trends[2]['authorUrl'] }}" target="_blank"
+                                class="flex items-center gap-0 group sm:gap-3">
                                 <div
                                     class="flex size-9 overflow-hidden shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-10">
                                     <img class="size-9 sm:size-10 img-down" src="{{ $trends[2]['authorImage'] }}"
@@ -186,12 +190,13 @@
 
                             <ul
                                 class="flex flex-row gap-2 *:rounded-full *:border *:border-[#FF2D20] *:bg-[#FF2D20]/10 *:px-2 *:py-0.5 *:text-xs sm:*:text-sm dark:text-[#FF2D20] dark:*:border-[#FF2D20]/15">
-                                <a class=" hover:underline" href="{{ $trends[2]['kategoriLink'] }}">
+                                <a class=" hover:underline"
+                                    href="{{ buildQueryUrl('all-post', ['kategori' => $trends[2]['kategoriLink']]) }}">
                                     {{ $trends[2]['kategori'] }}
                                 </a>
-                                <a class=" hover:underline" href="{{ $trends[2]['type'] }}">
+                                <span>
                                     {{ $trends[2]['type'] }}
-                                </a>
+                                </span>
                             </ul>
                         </div>
                     </div>
@@ -221,14 +226,14 @@
                                         </a>
                                     </h2>
                                     <p class="mt-4 text-sm text-gray-700 dark:text-gray-300">
-                                        {{ $popular[0]['desk'] }}
+                                        {!! $popular[0]['desk'] !!}
                                     </p>
                                 </div>
 
                                 <div class="flex items-center justify-between w-full">
                                     {{-- <a
                                 href="{{ route('your.route.name', ['authorId1' => $popular[0]['authorId1'], 'authorId2' => $popular[0]['authorId2']]) }}"
-                                --}} <a href=""
+                                --}} <a href="{{ $popular[0]['authorUrl'] }}" target="_blank"
                                         class="flex items-center gap-0 group sm:gap-3">
                                         <div
                                             class="flex size-9 overflow-hidden shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-10">
@@ -248,12 +253,13 @@
 
                                     <ul
                                         class="flex flex-row gap-2 w-full h-max *:rounded-full *:border *:border-[#FF2D20] *:bg-[#FF2D20]/10 *:px-2 *:py-0.5 *:text-xs sm:*:text-sm dark:text-[#FF2D20] dark:*:border-[#FF2D20]/15">
-                                        <a class=" hover:underline" href="{{ $popular[0]['kategoriLink'] }}">
+                                        <a class=" hover:underline"
+                                            href="{{ buildQueryUrl('all-post', ['kategori' => $popular[0]['kategoriLink']]) }}">
                                             {{ $popular[0]['kategori'] }}
                                         </a>
-                                        <a class=" hover:underline" href="{{ $popular[0]['type'] }}">
+                                        <span>
                                             {{ $popular[0]['type'] }}
-                                        </a>
+                                        </span>
                                     </ul>
                                 </div>
                             </div>
@@ -291,7 +297,7 @@
                                 <div class="flex items-center justify-between w-full px-10 ">
                                     {{-- <a
                                 href="{{ route('your.route.name', ['authorId1' => $popular[1]['authorId1'], 'authorId2' => $popular[1]['authorId2']]) }}"
-                                --}} <a href=""
+                                --}} <a href="{{ $popular[1]['authorUrl'] }}" target="_blank"
                                         class="flex items-center gap-0 group sm:gap-3">
                                         <div
                                             class="flex size-9 overflow-hidden shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-10">
@@ -311,12 +317,13 @@
 
                                     <ul
                                         class="flex flex-row gap-2 *:rounded-full *:border *:border-[#FF2D20] *:bg-[#FF2D20]/10 *:px-2 *:py-0.5 *:text-xs sm:*:text-sm dark:text-[#FF2D20] dark:*:border-[#FF2D20]/15">
-                                        <a class=" hover:underline" href="{{ $popular[1]['kategoriLink'] }}">
+                                        <a class=" hover:underline"
+                                            href="{{ buildQueryUrl('all-post', ['kategori' => $popular[1]['kategoriLink']]) }}">
                                             {{ $popular[1]['kategori'] }}
                                         </a>
-                                        <a class=" hover:underline" href="{{ $popular[1]['type'] }}">
+                                        <span>
                                             {{ $popular[1]['type'] }}
-                                        </a>
+                                        </span>
                                     </ul>
                                 </div>
                             </div>
@@ -380,7 +387,7 @@
                                 <div class="flex items-center justify-between w-full">
                                     {{-- <a
                                 href="{{ route('your.route.name', ['authorId1' => $rl['authorId1'], 'authorId2' => $rl['authorId2']]) }}"
-                                --}} <a href=""
+                                --}} <a href="{{ $rl['authorUrl'] }}" target="_blank"
                                         class="flex items-center gap-0 group sm:gap-3">
                                         <div
                                             class="flex size-9 overflow-hidden shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-10">
@@ -399,12 +406,13 @@
 
                                     <ul
                                         class="flex flex-row gap-2 *:rounded-full *:border *:border-[#FF2D20] *:bg-[#FF2D20]/10 *:px-2 *:py-0.5 *:text-xs sm:*:text-sm dark:text-[#FF2D20] dark:*:border-[#FF2D20]/15">
-                                        <a class=" hover:underline" href="{{ $rl['kategoriLink'] }}">
+                                        <a class=" hover:underline"
+                                            href="{{ buildQueryUrl('all-post', ['kategori' => $rl['kategoriLink']]) }}">
                                             {{ $rl['kategori'] }}
                                         </a>
-                                        <a class=" hover:underline" href="{{ $rl['type'] }}">
+                                        <span>
                                             {{ $rl['type'] }}
-                                        </a>
+                                        </span>
                                     </ul>
                                 </div>
                             </div>

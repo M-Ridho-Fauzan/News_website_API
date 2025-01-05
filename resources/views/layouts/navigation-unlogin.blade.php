@@ -51,9 +51,11 @@
                         <x-slot name="content">
                             @if (Route::has('login'))
                                 @auth
-                                    <x-dropdown-link href="{{ url('/dashboard') }}">
-                                        Dashboard
-                                    </x-dropdown-link>
+                                    @if (auth()->user()->is_admin)
+                                        <x-dropdown-link href="{{ url('/dashboard') }}">
+                                            Dashboard
+                                        </x-dropdown-link>
+                                    @endif
                                 @else
                                     <x-dropdown-link href="{{ route('login') }}">
                                         Log in
@@ -85,8 +87,6 @@
                     </button>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -117,9 +117,11 @@
             <div class="mt-3 space-y-1">
                 @if (Route::has('login'))
                     @auth
-                        <x-responsive-nav-link href="{{ url('/dashboard') }}">
-                            {{ __('Dashboard') }}
-                        </x-responsive-nav-link>
+                        @if (auth()->user()->is_admin)
+                            <x-responsive-nav-link href="{{ url('/dashboard') }}">
+                                {{ __('Dashboard') }}
+                            </x-responsive-nav-link>
+                        @endif
                     @else
                         <x-responsive-nav-link href="{{ route('login') }}">
                             {{ __('Log in') }}

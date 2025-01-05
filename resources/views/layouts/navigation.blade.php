@@ -5,7 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('dashboard') }}">
+
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200" />
                     </a>
                 </div>
@@ -16,9 +17,11 @@
                         {{ __('Home') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    @if (auth()->user()->is_admin)
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
 
                     <x-nav-link :href="route('all-post')" :active="request()->routeIs('all-post')">
                         {{ __('all-posts') }}
@@ -102,9 +105,11 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
 
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            @if (auth()->user()->is_admin)
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
 
             <x-responsive-nav-link :href="route('all-post')" :active="request()->routeIs('all-post')">
                 {{ __('All Posts') }}
@@ -119,7 +124,8 @@
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="flex">
                 <div class="w-16 px-3 rounded-full sm:px-1">
-                    <img class="border rounded-full dark:brightness-50" src="{{ Auth::user()->user_img }}"
+                    <img class="border rounded-full dark:brightness-50"
+                        src="{{ Auth::user()->user_img ? asset('img/' . Auth::user()->user_img) : asset('img/no-profile.png') }}"
                         alt="{{ Auth::user()->name }}">
                 </div>
                 <div class="px-3 sm:px-1">

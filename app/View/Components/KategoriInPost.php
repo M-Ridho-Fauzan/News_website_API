@@ -1,0 +1,40 @@
+<?php
+
+namespace App\View\Components;
+
+use Closure;
+use Illuminate\View\Component;
+use App\Services\AdditionalService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Exception\RequestException;
+
+class KategoriInPost extends Component
+{
+    public $kategori;
+    /**
+     * Create a new component instance.
+     */
+    public function __construct(AdditionalService $kategoriServices)
+    {
+        // $this->kategori = $kategoriServices->getSections(10);
+
+        // dd($this->kategori);
+        try {
+            $this->kategori = $kategoriServices->getSections(10);
+        } catch (RequestException $e) {
+            Log::error('Failed to fetch categories: ' . $e->getMessage());
+            $this->kategori = collect([]); // Pastikan selalu ada nilai default
+        }
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return view('components.kategori-in-post', [
+            'kategori' => $this->kategori
+        ]);
+    }
+}

@@ -22,3 +22,82 @@ button:disabled {
 .img-down {
   image-rendering: crisp-edges;
 }
+
+/* Styling untuk konten post */
+.content-post {
+  @apply my-10 px-4 md:px-0 max-w-3xl mx-auto;
+}
+
+.content-post h1 {
+  @apply text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100;
+}
+
+.content-post h2 {
+  @apply text-2xl md:text-3xl font-semibold mt-8 mb-4 text-gray-800 dark:text-gray-200;
+}
+
+.content-post p {
+  @apply mb-4 text-gray-700 dark:text-gray-300 leading-relaxed;
+}
+
+.content-post a {
+  @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 underline;
+}
+
+/* Styling untuk gambar */
+.element-image {
+  @apply my-10 rounded-lg overflow-hidden shadow-md dark:shadow-gray-700;
+}
+
+.element-image img {
+  @apply w-full h-auto object-cover;
+}
+
+.element-image figcaption {
+  @apply text-sm text-gray-600 dark:text-gray-400 mt-2 italic;
+}
+
+/* Styling untuk blockquote */
+.content-post blockquote {
+  @apply pl-4 border-l-4 border-gray-300 dark:border-gray-600 italic my-6 text-gray-600 dark:text-gray-400;
+}
+
+/* Styling untuk list */
+.content-post ul, .content-post ol {
+  @apply ml-6 mb-4;
+}
+
+.content-post li {
+  @apply mb-2 text-gray-700 dark:text-gray-300;
+}
+
+/* Styling untuk kode inline */
+.content-post code {
+  @apply bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5 font-mono text-sm text-gray-800 dark:text-gray-200;
+}
+
+/* Styling untuk blok kode */
+.content-post pre {
+  @apply bg-gray-100 dark:bg-gray-800 rounded p-4 overflow-x-auto my-6;
+}
+
+.content-post pre code {
+  @apply text-gray-800 dark:text-gray-200;
+}
+
+/* Styling untuk tabel */
+.content-post table {
+  @apply w-full border-collapse my-6;
+}
+
+.content-post th, .content-post td {
+  @apply border border-gray-300 dark:border-gray-600 px-4 py-2;
+}
+
+.content-post th {
+  @apply bg-gray-100 dark:bg-gray-800 font-semibold text-gray-800 dark:text-gray-200;
+}
+
+.content-post td {
+  @apply text-gray-700 dark:text-gray-300;
+}
