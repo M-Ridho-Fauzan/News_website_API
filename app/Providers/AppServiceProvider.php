@@ -44,33 +44,12 @@ class AppServiceProvider extends ServiceProvider
         $postsService = app(PostsService::class);
 
         return [
-            'trends' => $postsService->getPosts('', '', '', '', 20, 6),
-            'popular' => $postsService->getPosts('', '', '', '', 20, 6),
-            'posts' => $postsService->getPosts('', '', '', '', 20, 6),
+            'trends' => $postsService->getPosts('trends', '', '', '', 20, 6),
+            'popular' => $postsService->getPosts('popular', '', '', '', 20, 6),
+            'posts' => $postsService->getPosts('news', '', '', '', 20, 6),
         ];
     }
 
-    // private function prepareAllPostData()
-    // {
-    //     $postsService = app(PostsService::class);
-
-    //     // Ambil parameter dari request
-    //     $search = request('search', ''); // Default ke string kosong jika tidak ada
-    //     $filter = request('filter', ''); // Default ke string kosong jika tidak ada
-    //     $kategori = request('kategori', ''); // Default ke string kosong jika tidak ada
-
-    //     $posts = $postsService->getPosts($search, $kategori, $filter, '', 20, 6);
-
-    //     $posts->appends(request()->except('page'));
-
-    //     // // Tambahkan query parameter ke pagination URL
-    //     // $posts->appends(array_filter([
-    //     //     'search' => $search,
-    //     //     'filter' => $filter,
-    //     // ]));
-
-    //     return $posts;
-    // }
     private function prepareAllPostData()
     {
         $postsService = app(PostsService::class);

@@ -43,7 +43,7 @@
                                 <div class="flex items-center justify-between w-full">
                                     {{-- <a
                                 href="{{ route('your.route.name', ['authorId1' => $rl['authorId1'], 'authorId2' => $rl['authorId2']]) }}"
-                                --}} <a href=""
+                                --}} <a href="{{ $rl['authorUrl'] }}" target="_blank"
                                         class="flex items-center gap-0 group sm:gap-3">
                                         <div
                                             class="flex size-9 overflow-hidden shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-10">

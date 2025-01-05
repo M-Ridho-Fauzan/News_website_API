@@ -119,7 +119,8 @@
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="flex">
                 <div class="w-16 px-3 rounded-full sm:px-1">
-                    <img class="border rounded-full dark:brightness-50" src="{{ Auth::user()->user_img }}"
+                    <img class="border rounded-full dark:brightness-50"
+                        src="{{ Auth::user()->user_img ? asset('img/' . Auth::user()->user_img) : asset('img/no-profile.png') }}"
                         alt="{{ Auth::user()->name }}">
                 </div>
                 <div class="px-3 sm:px-1">
