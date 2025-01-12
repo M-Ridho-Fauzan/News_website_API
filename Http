@@ -1,0 +1,6 @@
+<script>start("d:\\laragon\\www\\news-website_app\\app\\Http\\");</script>
+<script>onHasParentDirectory();</script>
+<script>addRow("Controllers","Controllers",1,0,"0 B",1736670428,"1/12/25, 3:27:08 PM");</script>
+<script>addRow("Middleware","Middleware",1,0,"0 B",1736668484,"1/12/25, 2:54:44 PM");</script>
+<script>addRow("Requests","Requests",1,0,"0 B",1736664939,"1/12/25, 1:55:39 PM");</script>
+<script>addRow("Kernel.php","Kernel.php",0,1992,"1.9 kB",1736668512,"1/12/25, 2:55:12 PM");</script>

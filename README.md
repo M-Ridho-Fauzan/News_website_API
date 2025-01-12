@@ -140,6 +140,10 @@ composer install
 ```
 
 ```bash
+composer dump_autoload
+```
+
+```bash
 npm install
 ```
 
@@ -153,9 +157,32 @@ cp .env.example
 php artisan key:generate
 ```
 
--   **Ubah/samakan bagian-bagian ini**: di file `.env` sesuai kan.
+-   **Ubah/samakan bagian-bagian ini**: di file `.env` lang sung ctrl + v wae.
 
 ```bash
+APP_NAME='The Guards.'
+APP_ENV=local
+APP_KEY=base64:ZjH7fUKCdu78ccwivmdSKcUV9CXzVyaIElGz3Bh3/Ww=
+APP_DEBUG=true
+APP_TIMEZONE=UTC
+APP_URL=http://localhost
+
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
+
+APP_MAINTENANCE_DRIVER=file
+# APP_MAINTENANCE_STORE=database
+
+PHP_CLI_SERVER_WORKERS=4
+
+BCRYPT_ROUNDS=12
+
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -172,10 +199,29 @@ GOOGLE_REDIRECT_URI=http://127.0.0.1:8000/auth/google/callback
 GITHUB_CLIENT_ID=Ov23liEtddGrmkPyuCsQ
 GITHUB_CLIENT_SECRET=a7b9fb3f75c8aea2d390539ed31bff4b2a3780dd
 GITHUB_REDIRECT_URI=http://127.0.0.1:8000/auth/github/callback
-```
 
-```bash
-# Untuk Email Direct
+GUARDIAN_API_KEY='c3c30a7c-75e9-4a61-989a-e08d2bd1e508'
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=database
+
+CACHE_STORE=database
+CACHE_PREFIX=
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
 MAIL_MAILER=smtp
 MAIL_SCHEME=null
 MAIL_HOST=smtp.gmail.com
@@ -185,6 +231,14 @@ MAIL_PASSWORD=vvjunyfiwklygiqc
 MAIL_ENCRYPTION=ssl
 MAIL_FROM_ADDRESS="akunweb255@gmail.com"
 MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+VITE_APP_NAME="${APP_NAME}"
 ```
 
 ### 4️⃣ Migrasi Database
@@ -208,5 +262,3 @@ npm run dev
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-![Static Badge](https://img.shields.io/badge/build-pakyuu-brightgreen?style=plastic&logo=aral&logoColor=gray&label=Aya%20error%20keneh%20wae%3F%3F!&labelColor=white&color=red)

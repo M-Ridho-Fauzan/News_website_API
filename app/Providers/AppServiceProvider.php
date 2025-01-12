@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use App\Http\Middleware\IsAdmin;
+use App\Models\AppHistory;
 use App\Services\PostsService;
+use App\Http\Middleware\IsAdmin;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -63,12 +65,23 @@ class AppServiceProvider extends ServiceProvider
         $filter = request('filter', '');
         $kategori = request('kategori', '');
 
+        // dd($kategori);
+
         // Buat array parameter dan hilangkan parameter yang kosong
         $queryParams = array_filter([
             'search' => $search,
             'filter' => $filter,
             'kategori' => $kategori,
         ], fn($value) => !is_null($value) && $value !== '');
+
+        AppHistory::create([
+            'type_history' => $search ? 'search' : ($kategori ? 'kategori' : 'unknown'),
+            'param_post' => $search ?: 'No Search Query',
+            'id_post' => null,
+            'param_kategori' => $kategori ?: 'No Category',
+            'id_kategori' => $kategori ?: 'No Id Category',
+            'user_id' => Auth::user()->id ?? null,
+        ]);
 
         // Ambil data dari service
         $posts = $postsService->getPosts(

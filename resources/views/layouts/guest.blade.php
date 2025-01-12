@@ -20,7 +20,7 @@
     @endif
 </head>
 
-<body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50">
+<body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50 selection:bg-[#FF2D20] selection:text-white">
     <div class="relative z-10 max-w-full">
         @if (Route::has('login'))
             @auth
