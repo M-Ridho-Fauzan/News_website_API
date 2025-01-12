@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\IsAdmin;
 use App\Services\PostsService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
@@ -15,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind('isAdmin', function () {
+            return new IsAdmin();
+        });
     }
 
     /**

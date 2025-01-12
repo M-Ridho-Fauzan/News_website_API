@@ -52,4 +52,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Socialite::class);
     }
+
+    // Add this method to your existing User model
+    public function isAdmin()
+    {
+        return $this->is_admin === 1;
+    }
 }
