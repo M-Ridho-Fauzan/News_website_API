@@ -53,6 +53,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Socialite::class);
     }
 
+    public function appHistory()
+    {
+        return $this->belongsTo(AppHistory::class);
+    }
+
     // Add this method to your existing User model
     public function isAdmin()
     {
