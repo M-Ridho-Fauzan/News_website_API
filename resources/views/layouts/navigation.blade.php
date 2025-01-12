@@ -53,9 +53,10 @@
                                     </svg>
                                 </div>
 
+                                {{-- @dd(Auth::user()->user_img ? asset('img/' . Auth::user()->user_img) : asset('img/no-profile.png')) --}}
                                 <div class="w-16 px-3 overflow-hidden rounded-full">
                                     <img class="border rounded-full dark:brightness-50"
-                                        src="{{ Auth::user()->user_img ? asset('img/' . Auth::user()->user_img) : asset('img/no-profile.png') }}"
+                                        src="{{ Auth::user()->user_img ? Auth::user()->user_img : asset('img/no-profile.png') }}"
                                         x-data="{ userImg: '{{ Auth::user()->user_img ? asset(Auth::user()->user_img) : '' }}' }" alt="{{ Auth::user()->name }}"
                                         onerror="this.onerror=null;this.src='{{ asset('img/no-profile.png') }}';">
                                 </div>
