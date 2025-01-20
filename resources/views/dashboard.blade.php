@@ -1,4 +1,5 @@
-<x-guest-layout>
+{{-- <x-guest-layout> --}}
+<x-app-layout>
     <x-header title="{{ __('Dashboard') }}">
         {{-- <x-search-filter-form /> --}}
         Lorem ipsum dolor sit amet.
@@ -30,5 +31,5 @@
 
         </div>
     </div>
-</x-guest-layout>
-{{-- </x-app-layout> --}}
+    {{-- </x-guest-layout> --}}
+</x-app-layout>

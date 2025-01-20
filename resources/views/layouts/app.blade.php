@@ -16,36 +16,37 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation-unlogin')
-
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow dark:bg-gray-800">
-                <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
-
-        <footer class="pt-16 text-sm text-center text-black dark:text-white/70">
-            <div>Build with <span class="text-pink-500">❤️</span> Make Laravel
-                v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) &
-                Tailwind v3.1.0
-            </div>
-            <div>
-                <p class="text-xs">
-                    Copyright © 2024/2025 <span class="text-pink-500">❤️</span>WPU Unpas
-                </p>
-            </div>
-        </footer>
+<body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50 selection:bg-[#FF2D20] selection:text-white">
+    <div class="relative z-10 max-w-full">
+        @if (Route::has('login'))
+            @auth
+                @include('layouts.navigation')
+            @else
+                @include('layouts.navigation-unlogin')
+            @endauth
+        @endif
     </div>
+
+    <div class=" bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
+        <img id="background" class="absolute -left-20 top-0 max-w-[877px] max-h-screen"
+            src="https://laravel.com/assets/img/welcome/background.svg" alt="Laravel background" />
+    </div>
+
+    <div>
+        {{ $slot }}
+    </div>
+
+    <footer class="pt-16 pb-8 text-sm text-center text-black dark:text-gray-500/70">
+        <div>Build with <span class="text-pink-500 dark:text-pink-500/40">❤️</span> Make Laravel
+            v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) &
+            Tailwind v3.1.0
+        </div>
+        <div>
+            <p class="text-xs">
+                Copyright © 2024/2025 <span class="text-pink-500 dark:text-pink-500/40">❤️</span>WPU Unpas
+            </p>
+        </div>
+    </footer>
 
     <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
 </body>

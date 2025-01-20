@@ -75,7 +75,8 @@ class AppServiceProvider extends ServiceProvider
         ], fn($value) => !is_null($value) && $value !== '');
 
         AppHistory::create([
-            'type_history' => $search ? 'search' : ($kategori ? 'kategori' : 'unknown'),
+            'type_history' => 'request',
+            'request_type' => $search ? 'search' : ($kategori ? 'kategori' : 'unknown'),
             'param_post' => $search ?: 'No Search Query',
             'id_post' => null,
             'param_kategori' => $kategori ?: 'No Category',
