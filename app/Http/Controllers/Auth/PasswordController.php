@@ -20,6 +20,10 @@ class PasswordController extends Controller
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
+        if ($request->user()->is_oauth){
+            return back()->with('error', 'Akun anda tidak dapat mengubah password');
+        }
+
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
