@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\Socialite as SocialiteModel;
 
@@ -20,22 +22,28 @@ class SocialiteController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function callback($provider)
+    public function callback($provider): RedirectResponse
     {
         try {
-        $socialUser = Socialite::driver($provider)->user();
+            $socialUser = Socialite::driver($provider)->user();
 
-        $authUser = $this->store($socialUser, $provider);
+            $authUser = $this->store($socialUser, $provider);
 
-        Auth::login($authUser);
+            // Auth::login($authUser);
 
-        return redirect()->route('home');
-            } catch (\Exception $e) {
-        return redirect('/login')->with('error', 'Something went wrong!');
+            // return redirect()->route('home');
+
+            event(new Registered($authUser));
+
+            Auth::login($authUser);
+
+            return redirect(route('home', absolute: false));
+        } catch (\Exception $e) {
+            return redirect('/login')->with('error', 'Something went wrong!');
+        }
     }
-    }
 
-        public function store($socialUser, $provider)
+    public function store($socialUser, $provider)
     {
         $socialAccount = SocialiteModel::where(
             'provider_id',
@@ -51,7 +59,8 @@ class SocialiteController extends Controller
                     'name' => $socialUser->getName() ?
                         $socialUser->getName() : $socialUser->getNickname(),
                     'email' => $socialUser->getEmail(),
-                    'password' => Hash::make('password@1234'),
+                    'password' => null,
+                    'is_oauth' => true,
                     'email_verified_at' => now(),
                 ]);
             }

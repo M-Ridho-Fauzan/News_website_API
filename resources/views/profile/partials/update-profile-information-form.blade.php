@@ -68,7 +68,8 @@
                 <!-- Input Email -->
                 <div class="mt-6">
                     <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" name="email" type="email" class="block w-full mt-1"
+                    <x-text-input id="email" name="email" type="email"
+                        class="block w-full mt-1  {{ !Auth::user()->is_oauth ? '' : 'pointer-events-none opacity-30' }}"
                         :value="old('email', $user->email)" required autocomplete="username" />
                     <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
